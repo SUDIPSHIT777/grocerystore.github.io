@@ -1,67 +1,27 @@
-class Carousel {
-  constructor() {
-    this.slider = document.getElementById("slider");
-    this.prevBtn = document.getElementById("prevBtn");
-    this.nextBtn = document.getElementById("nextBtn");
-
-    this.cards = document.querySelectorAll(".card");
-    this.currentSlide = 0;
-    this.cardsPerView = this.getCardsPerView();
-    this.totalSlides = Math.max(0, this.cards.length - this.cardsPerView);
-
-    this.init();
-    this.updateButtons();
-  }
-
-  getCardsPerView() {
-    const containerWidth = this.slider.parentElement.clientWidth;
-    const cardWidth = 150;
-    return Math.floor((containerWidth * 1) / cardWidth);
-  }
-
-  init() {
-    this.prevBtn.addEventListener("click", () => this.prevSlide());
-    this.nextBtn.addEventListener("click", () => this.nextSlide());
-    this.slider.addEventListener("mouseleave", () => {
-      if (isMouseDragging) {
-        isMouseDragging = false;
-        this.slider.style.cursor = "grab";
-      }
-    });
-  }
-
-  updateSlider() {
-    const cardWidth = 100;
-    const translateX = -this.currentSlide * cardWidth;
-    this.slider.style.transform = `translateX(${translateX}px)`;
-  }
-
-  nextSlide() {
-    if (this.currentSlide < this.totalSlides) {
-      this.currentSlide++;
-      this.updateSlider();
-      this.updateButtons();
-    }
-  }
-
-  prevSlide() {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
-      this.updateSlider();
-      this.updateButtons();
-    }
-  }
-
-  updateButtons() {
-    this.prevBtn.disabled = this.currentSlide === 0;
-    this.nextBtn.disabled = this.currentSlide === this.totalSlides;
-  }
+const slide = document.getElementById("slider");
+const prvBtn = document.getElementById("prevBtn");
+const nexBtn = document.getElementById("nextBtn");
+const card = document.querySelectorAll(".card");
+let cdIndex = 0;
+const cdWidth = 50;
+function upSlider() {
+  const translateX = -cdIndex * cdWidth;
+  slide.style.transform = `translateX(${translateX}px)`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  new Carousel();
+nexBtn.addEventListener("click", () => {
+  if (cdIndex < card.length - 1) {
+    cdIndex++;
+    upSlider();
+  }
 });
 
+prvBtn.addEventListener("click", () => {
+  if (cdIndex > 0) {
+    cdIndex--;
+    upSlider();
+  }
+});
 // New Slider//
 
 const slider = document.getElementById("T-slider");
